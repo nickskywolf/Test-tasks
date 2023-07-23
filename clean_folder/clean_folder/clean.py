@@ -1,4 +1,4 @@
-# main.py
+
 from pathlib import Path
 import shutil
 import sys
@@ -17,13 +17,12 @@ def handle_other(filename: Path, target_folder: Path):
 
 
 def handle_archive(filename: Path, target_folder: Path):
-    # Створюємо папку для архіву
+    
     target_folder.mkdir(exist_ok=True, parents=True)
-    # Створюємо папку куди розпакуємо архів
-    # Беремо суфікс у файла і удаляємо replace(filename.suffix, '')
+    
     folder_for_file = target_folder / normalize(filename.name.replace(filename.suffix, ''))
 
-    # Створюємо папку для архіву з іменем файлу
+    
     folder_for_file.mkdir(exist_ok=True, parents=True)
     try:
         shutil.unpack_archive(str(filename.resolve()),
@@ -45,7 +44,6 @@ def handle_folder(folder: Path):
 def main(folder: Path):
     parser.scan(folder)
     for file in parser.JPEG_IMAGES:
-        # pathjoin(str(folder), 'images', 'JPEG')
         handle_media(file, folder / 'images' / 'JPEG')
     for file in parser.JPG_IMAGES:
         handle_media(file, folder / 'images' / 'JPG')
@@ -57,11 +55,11 @@ def main(folder: Path):
         handle_media(file, folder / 'audio' / 'MP3')
 
     for file in parser.MY_OTHER:
-        handle_other(file, folder / 'MY_OTHER')  # Щоб не було помилки
+        handle_other(file, folder / 'MY_OTHER')  
     for file in parser.ARCHIVES:
         handle_archive(file, folder / 'archives')
 
-    # Виконуємо реверс списку для того щоб видалити всі папки
+    
     for folder in parser.FOLDERS[::-1]:
         handle_folder(folder)
 
