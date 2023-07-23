@@ -16,6 +16,7 @@ KNOWN_EXTENSIONS = {
     'archives': ('ZIP', 'GZ', 'TAR')
 }
 
+
 def process_folder(folder_path):
     for root, dirs, files in os.walk(folder_path):
         for file in files:

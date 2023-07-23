@@ -16,6 +16,7 @@ def handle_other(filename: Path, target_folder: Path):
     filename.replace(target_folder / normalize(filename.name))
 
 
+
 def handle_archive(filename: Path, target_folder: Path):
     
     target_folder.mkdir(exist_ok=True, parents=True)
