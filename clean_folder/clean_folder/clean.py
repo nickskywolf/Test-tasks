@@ -28,7 +28,7 @@ def handle_archive(filename: Path, target_folder: Path):
         shutil.unpack_archive(str(filename.resolve()),
                               str(folder_for_file.resolve()))
     except shutil.ReadError:
-        print(f'Це не архів {filename}!')
+        print(f'This is not archive {filename}!')
         folder_for_file.rmdir()
         return None
     filename.unlink()
@@ -38,7 +38,7 @@ def handle_folder(folder: Path):
     try:
         folder.rmdir()
     except OSError:
-        print(f'Помилка видалення папки {folder}')
+        print(f'Deleting error {folder}')
 
 
 def main(folder: Path):
