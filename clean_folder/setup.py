@@ -6,5 +6,5 @@ setup(name='clean',
       author='Nick',
       author_email='nick@python.test',
       packages=find_namespace_packages(),
-      entry_points={'console_scripts': ['clean_folder=clean_folder.main:start']}
+      entry_points={'console_scripts': ['clean_folder=clean_folder.clean:start']}
 )
