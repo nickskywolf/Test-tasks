@@ -51,10 +51,11 @@ def get_birthdays_per_week(users):
 
 # Тестовий список users
 users = [
-    {"name": "Bill", "birthday": datetime(2023, 5, 17)},
-    {"name": "Jill", "birthday": datetime(2023, 5, 17)},
-    {"name": "Kim", "birthday": datetime(2023, 5, 20)},
-    {"name": "Jan", "birthday": datetime(2023, 5, 21)},
+    {"name": "Bill_1", "birthday": datetime(2023, 7, 22)},
+    {"name": "Jill_2", "birthday": datetime(2023, 7, 23)},
+    {"name": "Kim_3", "birthday": datetime(2023, 7, 25)},
+    {"name": "Ja_4", "birthday": datetime(2023, 7, 27)},
+    {"name": "Orn_5", "birthday": datetime(2023, 7, 28)},
 ]
 
 # Викликаємо функцію з тестовим списком
