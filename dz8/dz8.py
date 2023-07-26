@@ -52,7 +52,7 @@ def get_birthdays_per_week(users):
 
     # Виводимо результат
     if last_week_birthdays:
-        print("Gone")
+        print("Gone (1 week):")
         for birthday in last_week_birthdays:
             print(birthday)
         print()
