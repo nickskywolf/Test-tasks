@@ -38,7 +38,7 @@ def get_birthdays_per_week(users):
             if birthday_weekday >= 5:  # 5 - Saturday, 6 - Sunday
                 day_of_week = 'Monday'
             
-            # Перевіряємо, чи день народження вже минув у поточному році
+            
             next_birthday = birthday.replace(year=current_date.year)
             if next_birthday < current_date:
                 if next_birthday >= last_monday and next_birthday < next_monday:
@@ -48,24 +48,23 @@ def get_birthdays_per_week(users):
             else:
                 current_week_birthdays.append(f"{day_of_week}: {name}")
             
-            # Додаємо користувача в словник під відповідним днем тижня
             birthdays_per_week[day_of_week].append(name)
 
     # Виводимо результат
     if last_week_birthdays:
-        print("Пройшли")
+        print("Gone")
         for birthday in last_week_birthdays:
             print(birthday)
         print()
 
     if current_week_birthdays:
-        print("Поточний тиждень:")
+        print("Will be on this week:")
         for birthday in current_week_birthdays:
             print(birthday)
         print()
 
     if next_week_birthdays:
-        print("Наступний тиждень:")
+        print("Next week:")
         for birthday in next_week_birthdays:
             print(birthday)
         print()
