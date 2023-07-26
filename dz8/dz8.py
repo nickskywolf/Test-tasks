@@ -1,12 +1,10 @@
 from datetime import datetime, timedelta
 
 def get_birthdays_per_week(users):
-    # Отримуємо поточну дату та час
     current_date = datetime.now()
     
-    # Рахуємо дату наступного понеділка
     next_monday = current_date + timedelta(days=(7 - current_date.weekday()))
-    # Рахуємо дату минулого понеділка
+    
     last_monday = current_date - timedelta(days=current_date.weekday())
 
     # Створюємо словник з днями тижня
