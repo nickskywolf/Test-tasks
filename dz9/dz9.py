@@ -5,7 +5,7 @@ def input_error(func):
             return func(*args, **kwargs)
         except KeyError as e:
             return f"Error: Contact '{e.args[0]}' not found. Please check the name and try again."
-        except ValueError as e:
+        except ValueError:
             return "Error: Invalid input format. Please provide both name and phone number separated by a space."
         except IndexError:
             return "Error: Please provide both name and phone number separated by a space."
