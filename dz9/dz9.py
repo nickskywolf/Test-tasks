@@ -3,8 +3,12 @@ def input_error(func):
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except (KeyError, ValueError, IndexError) as e:
-            return str(e)
+        except KeyError as e:
+            return f"Error: Contact '{e.args[0]}' not found. Please check the name and try again."
+        except ValueError as e:
+            return "Error: Invalid input format. Please provide both name and phone number separated by a space."
+        except IndexError:
+            return "Error: Please provide both name and phone number separated by a space."
     return wrapper
 
 # Функція для додавання контакту
@@ -12,20 +16,24 @@ def input_error(func):
 def add_contact(data):
     name, phone = data.split(' ')
     contacts[name] = phone
-    return f"Contact {name} with phone {phone} has been added."
+    return f"Contact '{name}' with phone '{phone}' has been added."
 
 # Функція для зміни номера телефону існуючого контакту
 @input_error
 def change_phone(data):
     name, phone = data.split(' ')
+    if name not in contacts:
+        raise KeyError(name)
     contacts[name] = phone
-    return f"Phone number for {name} has been changed to {phone}."
+    return f"Phone number for '{name}' has been changed to '{phone}'."
 
 # Функція для виведення номера телефону контакту
 @input_error
 def show_phone(data):
     name = data
-    return f"Phone number for {name} is {contacts[name]}."
+    if name not in contacts:
+        raise KeyError(name)
+    return f"Phone number for '{name}' is '{contacts[name]}'."
 
 # Функція для виведення всіх контактів
 def show_all():
