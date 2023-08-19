@@ -67,8 +67,26 @@ class Record:
         self.phones.append(phone)
 
 class AddressBook(UserDict):
+    def __init__(self, chunk_size=10):
+        super().__init__()
+        self.chunk_size = chunk_size
+
     def add_record(self, record):
         self.data[record.name.value] = record
+
+    def __iter__(self):
+        self._iter_index = 0
+        self._keys_chunked = list(self.data.keys())
+        return self
+
+    def __next__(self):
+        if self._iter_index < len(self._keys_chunked):
+            chunk = self._keys_chunked[self._iter_index : self._iter_index + self.chunk_size]
+            records = [self.data[key] for key in chunk]
+            self._iter_index += self.chunk_size
+            return records
+        else:
+            raise StopIteration
 
 if __name__ == "__main__":
     name = Name('Bill')
