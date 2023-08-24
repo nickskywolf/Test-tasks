@@ -1,5 +1,6 @@
 import re
 import json
+import os
 from collections import UserDict
 from datetime import datetime, date
 
@@ -48,9 +49,12 @@ class Birthday(Field):
 
 class Record:
     def __init__(self, name, phone, birthday=None):
-        self.name = name
-        self.phones = [phone]
-        self.birthday = Birthday(birthday.value) if birthday is not None else None
+        try:
+            self.name = Name(name)
+            self.phones = [Phone(phone)]
+            self.birthday = Birthday(birthday) if birthday else None
+        except ValueError as e:
+            print("Error:", e)
 
     def days_to_birthday(self):
         if self.birthday:
@@ -71,6 +75,7 @@ class AddressBook(UserDict):
     def __init__(self, chunk_size=10):
         super().__init__()
         self.chunk_size = chunk_size
+        self.file_path = os.path.join(os.path.dirname(__file__), "address_book.json")
 
     def add_record(self, record):
         self.data[record.name.value] = record
@@ -113,7 +118,7 @@ class AddressBook(UserDict):
 
 if __name__ == "__main__":
     ab = AddressBook()
-    ab.load_from_file("address_book.json")
+    ab.load_from_file(ab.file_path)
 
     while True:
         print("1. Add Record")
@@ -132,7 +137,7 @@ if __name__ == "__main__":
             while birthday and not Birthday.validate_date(birthday):
                 print("Invalid date format. Please use YYYY-MM-DD format or leave empty.")
                 birthday = input("Enter birthday (YYYY-MM-DD, optional): ")
-            rec = Record(Name(name), Phone(phone), Birthday(birthday) if birthday else None)
+            rec = Record(name, phone, birthday)
             ab.add_record(rec)
         elif choice == "2":
             search_term = input("Enter search term: ")
@@ -147,9 +152,9 @@ if __name__ == "__main__":
             else:
                 print("No results found.")
         elif choice == "3":
-            ab.save_to_file("address_book.json")
+            ab.save_to_file(ab.file_path)
             print("Data saved.")
         elif choice == "4":
-            ab.save_to_file("address_book.json")
+            ab.save_to_file(ab.file_path)
             print("Data saved. Exiting...")
             break
