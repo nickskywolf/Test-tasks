@@ -72,15 +72,15 @@ class Record:
         self.phones.append(phone)
 
 class AddressBook(UserDict):
-    def __init__(self, chunk_size=10):
+    def __init__(self, chunk_size=10, file_path="address_book.json"):
         super().__init__()
         self.chunk_size = chunk_size
-        self.file_path = os.path.join(os.path.dirname(__file__), "address_book.json")
+        self.file_path = file_path
 
     def add_record(self, record):
         self.data[record.name.value] = record
 
-    def save_to_file(self, filename):
+    def save_to_file(self):
         data = {
             "records": {
                 name: {
@@ -91,12 +91,12 @@ class AddressBook(UserDict):
                 for name, record in self.data.items()
             }
         }
-        with open(filename, "w") as f:
+        with open(self.file_path, "w") as f:
             json.dump(data, f, indent=4)
 
-    def load_from_file(self, filename):
+    def load_from_file(self):
         try:
-            with open(filename, "r") as f:
+            with open(self.file_path, "r") as f:
                 data = json.load(f)
                 for name, record_data in data.get("records", {}).items():
                     name_field = Name(record_data["name"])
@@ -116,9 +116,8 @@ class AddressBook(UserDict):
                 results.append(record)
         return results
 
-if __name__ == "__main__":
-    ab = AddressBook()
-    ab.load_from_file(ab.file_path)
+def address_book_main(ab):
+    ab.load_from_file()
 
     while True:
         print("1. Add Record")
@@ -137,7 +136,7 @@ if __name__ == "__main__":
             while birthday and not Birthday.validate_date(birthday):
                 print("Invalid date format. Please use YYYY-MM-DD format or leave empty.")
                 birthday = input("Enter birthday (YYYY-MM-DD, optional): ")
-            rec = Record(name, phone, birthday)
+            rec = Record(Name(name), Phone(phone), Birthday(birthday) if birthday else None)
             ab.add_record(rec)
         elif choice == "2":
             search_term = input("Enter search term: ")
@@ -152,9 +151,9 @@ if __name__ == "__main__":
             else:
                 print("No results found.")
         elif choice == "3":
-            ab.save_to_file(ab.file_path)
+            ab.save_to_file()
             print("Data saved.")
         elif choice == "4":
-            ab.save_to_file(ab.file_path)
+            ab.save_to_file()
             print("Data saved. Exiting...")
             break
